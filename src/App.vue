@@ -1,29 +1,93 @@
 <template>
   <div id="app">
-    <div>
-      {{ name }} - {{ age }}
-    </div>
-    <input type="text" v-model="newName" />
-    <button @click="changeName">Change Name</button>
-    <br>
-    <input type="text" v-model="newAge" />
-    <button @click="changeAge">Change Age</button>
+    <header>
+      <div class="title">
+        <img src="./assets/heart.svg" alt="site logo">
+        <h1>Hyrule Jobs</h1>
+      </div>
+      <div class="order">
+        <button @click="handleClick('title')">Order by title</button>
+        <button @click="handleClick('salary')">Order by salary</button>
+        <button @click="handleClick('location')">Order by location</button>
+      </div>
+    </header>
+    <jobList :jobs="jobs" :order="order"/>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { Job } from './types/Job'
+import { OrderTerm } from './types/OrderTerm';
+import JobList from './components/JobList.vue'
 
-const name = ref('Link')
-const age = ref<number | string>(20)
-const newName = ref('')
-const newAge = ref('')
+const jobs = ref<Job[]>([
+  {
+    id: '1',
+    title: 'Farm worker',
+    location: 'Lon Lon Ranch',
+    salary: '30000',
+  },
+  {
+    id: '2',
+    title: 'Quarryman',
+    location: 'Death Mountain',
+    salary: '40000',
+  },
+  {
+    id: '3',
+    title: 'Flute player',
+    location: 'The Lost Woods',
+    salary: '35000',
+  },
+  {
+    id: '4',
+    title: 'FisherMan',
+    location: 'Lake Hylia',
+    salary: '21000',
+  },
+  {
+    id: '5',
+    title: 'Prison Guard',
+    location: 'Gerudo Valley',
+    salary: '32000',
+  }
+])
+const order = ref<OrderTerm>('title')
 
-const changeName = () => {
-  name.value = newName.value
-}
+const handleClick = (key: OrderTerm) => {
+  
+  order.value = key
 
-const changeAge = () => {
-  age.value = newAge.value
 }
 </script>
+
+<style>
+  header {
+    text-align: center;
+  }
+  header .order {
+    margin-top: 20px;
+  }
+  button {
+    margin: 0 10px;
+    color: #1195c9;
+    border: 3px solid #1195c9;
+    background: #d5f0ff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  header .title{
+    display: flex;
+    justify-content: center;
+  }
+  header img {
+    width: 60px;
+    margin-right: 20px;
+  }
+  header h1 {
+    font-size: 3em;
+  }
+</style>
