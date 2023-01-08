@@ -1,27 +1,29 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div id="app">
+    <div>
+      {{ name }} - {{ age }}
+    </div>
+    <input type="text" v-model="newName" />
+    <button @click="changeName">Change Name</button>
+    <br>
+    <input type="text" v-model="newAge" />
+    <button @click="changeAge">Change Age</button>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+<script lang="ts" setup>
+import { ref } from 'vue'
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-});
-</script>
+const name = ref('Link')
+const age = ref<number | string>(20)
+const newName = ref('')
+const newAge = ref('')
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+const changeName = () => {
+  name.value = newName.value
 }
-</style>
+
+const changeAge = () => {
+  age.value = newAge.value
+}
+</script>
